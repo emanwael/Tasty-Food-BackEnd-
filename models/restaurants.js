@@ -26,11 +26,11 @@ const restaurantSchema = mongoose.Schema({
   rate: {
     type: {
       rate: { type: Number, required: true },
-      number_of_ratings: { type: number, required: true },
+      number_of_ratings: { type: Number, required: true },
     },
   },
-  account_number: { type: number, required: true },
-  phone_number: { type: [number], required: true },
+  account_number: { type: Number, required: true },
+  phone_number: { type: [Number], required: true },
   payment_method: { type: [String], required: true },
   opened: {
     type: {
