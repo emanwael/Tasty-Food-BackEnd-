@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const MONGO_URL = "mongodb+srv://eman:1234@cluster0.xtb3nbi.mongodb.net/talabat";
+const MONGO_URL = "mongodb+srv://eman_ali:1234@cluster0.xtb3nbi.mongodb.net/talabat";
 
 const mealsRoute = require('./routes/meals') ;
+const customersRoute=require('./routes/customers');
 
 const PORT = 5100;
 const app =express();
@@ -18,6 +19,7 @@ app.listen(PORT,(err)=>{
 app.use(express.json());
 
 app.use('/meals',mealsRoute);
+app.use('/customers',customersRoute)
 
 
 
