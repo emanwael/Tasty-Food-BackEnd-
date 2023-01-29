@@ -4,6 +4,8 @@ const MONGO_URL = "mongodb+srv://eman_ali:1234@cluster0.xtb3nbi.mongodb.net/tala
 
 const mealsRoute = require('./routes/meals') ;
 const customersRoute=require('./routes/customers');
+const ordersRoute = require('./routes/orders') ;
+
 
 const PORT = 5100;
 const app =express();
@@ -20,6 +22,8 @@ app.use(express.json());
 
 app.use('/meals',mealsRoute);
 app.use('/customers',customersRoute)
+app.use('/orders',ordersRoute);
+
 
 
 
