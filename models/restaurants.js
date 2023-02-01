@@ -1,45 +1,44 @@
 const mongoose = require("mongoose");
 
 const restaurantSchema = mongoose.Schema({
-  restaurant_name: { type: String, required: true },
-  logo: { type: String, required: true }, ////////////!
+  restaurant_name: { type: String },
+  logo: { type: String }, ////////////////////!
   meals: { type: [mongoose.Types.ObjectId] },
   branches: {
     type: [
       {
-        branch_name: { type: String, required: true },
-        address: { type: String, required: true },
-        location: { type: String, required: true },
+        branch_name: { type: String },
+        address: { type: String },
+        location: { type: String },
       },
     ],
   },
   reviews: {
     type: [
       {
-        user: { type: mongoose.Types.ObjectId, required: true },
-        rate: { type: Number, required: true },
-        feedback: { type: String, required: true },
+        user: { type: mongoose.Types.ObjectId, ref: "customers" },
+        rate: { type: Number },
+        feedback: { type: String },
       },
     ],
   },
   delivery_time: { type: Number },
   rate: {
     type: {
-      rate: { type: Number, required: true },
-      number_of_ratings: { type: Number, required: true },
+      rate: { type: Number },
+      number_of_ratings: { type: Number },
     },
   },
-  account_number: { type: Number, required: true },
-  phone_number: { type: [Number], required: true },
-  payment_method: { type: [String], required: true },
+  account_number: { type: Number },
+  phone_number: { type: [Number] },
+  payment_method: { type: [String] },
   opened: {
     type: {
-      from: { type: String, required: true },
-      to: { type: String, required: true },
+      from: { type: String },
+      to: { type: String },
     },
-    required: true,
   },
-  menu: { type: [mongoose.Types.ObjectId] },
+  menu: [{ type: mongoose.Types.ObjectId, ref: "meals" }],
 });
 
 const restaurantModel = mongoose.model("restaurants", restaurantSchema);

@@ -9,7 +9,7 @@ async function getAllRestaurants() {
 }
 async function getRestaurantById(restaurantId) {
   try {
-    return await RestaurantsModel.findById(restaurantId);
+    return await RestaurantsModel.findById(restaurantId).populate("menu");
   } catch (error) {
     console.log(error);
   }
