@@ -8,7 +8,7 @@ router.use(express.json());
 
 router.get("/", async (req, res) => {
   try {
-    const mealsList = await mealsModel.find({});
+    const mealsList = await mealsModel.find({}).populate("restaurant");
 
     res.json(mealsList);
   } catch (error) {

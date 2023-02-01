@@ -1,17 +1,15 @@
 const mongoose = require("mongoose");
 
-
 const mealsSchema = new mongoose.Schema({
-    meal_name: String,
-    description: String,
-    price: Number,
-    meal_img: String,
-    food_group: String,
-    is_available: Boolean
-}) 
+  meal_name: { type: String },
+  description: { type: String },
+  price: { type: Number },
+  meal_img: { type: String },
+  food_group: { type: String },
+  is_available: { type: Boolean },
+  restaurant: { type: mongoose.Types.ObjectId, ref: "restaurants" },
+});
 
-
-const mealsModel = mongoose.model('meals',mealsSchema);
-
+const mealsModel = mongoose.model("meals", mealsSchema);
 
 module.exports = mealsModel;
