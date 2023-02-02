@@ -1,18 +1,22 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const customerShema= new mongoose.Schema({
-    customer_name:String,
-    customer_img:String,
-    address:String,
-    phone_number:String,
-    email:String,
-    favourite_orders:[
-        {
-       restaurant:{type:Number},
-       meal: {type:mongoose.Schema.Types.ObjectId,ref:'meals'}
-    },
-]
-   
+const customerShema = mongoose.Schema({
+  customer_name: { type: String },
+  customer_img: { type: String },
+  address: { type: String },
+  phone_number: { type: String },
+  email: { type: String },
+  favourite_orders: {
+    type: [
+      {
+        restaurant: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "restaurants",
+        },
+        meal: { type: mongoose.Schema.Types.ObjectId, ref: "meals" },
+      },
+    ],
+  },
 });
-const customersModel=mongoose.model("customers",customerShema);
-module.exports=customersModel;
+const customersModel = mongoose.model("customers", customerShema);
+module.exports = customersModel;

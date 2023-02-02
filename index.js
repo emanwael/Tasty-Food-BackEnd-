@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const MONGO_URL =
-  "mongodb+srv://safaa:1234@cluster0.xtb3nbi.mongodb.net/talabat";
+  "mongodb+srv://israa:1234@cluster0.xtb3nbi.mongodb.net/talabat";
 
 const mealsRoute = require("./routes/meals");
 const customersRoute = require("./routes/customers");
@@ -28,4 +28,4 @@ app.use("/customers", customersRoute);
 app.use("/orders", ordersRoute);
 app.use("/restaurants", restaurantsRoute);
 app.use("/analysis", analysisRoute);
-app.use("/restaurant_admins", restaurantAdminRoute);
+app.use("/restaurant-admins", restaurantAdminRoute);
