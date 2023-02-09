@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const MONGO_URL =
-  "mongodb+srv://israa:1234@cluster0.xtb3nbi.mongodb.net/talabat";
+  "mongodb+srv://eman:1234@cluster0.xtb3nbi.mongodb.net/talabat";
 
 const mealsRoute = require("./routes/meals");
 const customersRoute = require("./routes/customers");

@@ -1,83 +1,41 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const ordersModel = require("../models/orders");
+const {
+    getAllOrders,
+    getOrderById,
+    updateOrder,
+    deleteOrderById,
+    createOrders } = require("../controllers/orders")
 
 
-const router =express.Router();
+const router = express.Router();
 
 router.use(express.json());
 
-router.get('/',async (req,res)=>{
 
-    try {
-        const ordersList = await ordersModel.find({});
-
-        res.json(ordersList);        
-    } catch (error) {
-        res.json({ Err: "DB_ERR" });
-
-    }
+router.get("/", async (req, res) => {
+    return res.json(await getAllOrders());
 });
 
-
-router.get('/:id',async(req,res)=>{
-    try {
-        const order = await ordersModel.findById(req.params.id);
-        res.json(order);
-        
-    } catch (error) {
-        res.json({ Err: "DB_ERR" });
-
-    }
+router.get("/:id", async (req, res) => {
+    return res.json(await getOrderById(req.params.id));
 });
 
-router.post('/',async(req,res)=>{ 
-   
-    const order = new ordersModel(req.body);
-
-    try {
-        const ordersave = await order.save();
-        res.json(ordersave);
-        
-    } catch (error) {
-        res.json({ Err: "DB_ERR" });
-    }
-
+router.post("/", async (req, res) => {
+    return res.json(await createOrders(req.body));
 });
 
-router.put('/:id',async(req,res)=>{
-
-    try {
-        const order = await ordersModel.updateOne({"_id" : req.params.id},req.body);
-        return res.send("update done") ;
-        
-    } catch (error) {
-        res.json({ Err: "DB_ERR" });
-    }
-
+router.put("/:id", async (req, res) => {
+    return res.json(await updateOrder(req.params.id, req.body));
 });
-router.patch('/:id',async(req,res)=>{
-  
-    try {
-        const order = await ordersModel.updateOne({"_id" : req.params.id},req.body);
-        return res.send("update done") ;
-        
-    } catch (error) {
-        res.json({ Err: "DB_ERR" });
-    }
+router.patch("/:id", async (req, res) => {
+    return res.json(await updateOrder(req.params.id, req.body));
 });
 
-router.delete('/:id',async(req,res)=>{
-    try {
-        const order = await ordersModel.deleteOne({"_id" : req.params.id});
-        return res.send("delete done") ;
-        
-    } catch (error) {
-        res.json({ Err: "DB_ERR" });
-    }
-  
+router.delete("/:id", async (req, res) => {
+    return res.json(await deleteOrderById(req.params.id));
 });
-
 
 
 module.exports = router;

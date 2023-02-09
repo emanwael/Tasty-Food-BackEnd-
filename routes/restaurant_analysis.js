@@ -1,61 +1,37 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const analysisModel = require("../models/restaurant_analysis");
+const {
+  getAllAnalysis,
+  getAnalysisById,
+  updateAnalysis,
+  deleteAnalysisById,
+  createAnalysis } = require("../controllers/restaurant_analysis")
 
 const router = express.Router();
 
 router.use(express.json());
 
 router.get("/", async (req, res) => {
-  try {
-    const getAllAnalysis = await analysisModel.find({});
-    return res.json(getAllAnalysis);
-  } catch (error) {
-    return res.json({ Err: "Resturant Analysis DataBase ERRORR" });
-  }
+  return res.json(await getAllAnalysis());
 });
 
 router.get("/:id", async (req, res) => {
-  try {
-    const analysis = await analysisModel.findById(req.params.id);
-    return res.json(analysis);
-  } catch (error) {
-    return res.json({ Err: "Resturant Analysis DataBase ERRORR" });
-  }
+  return res.json(await getAnalysisById(req.params.id));
 });
 
 router.post("/", async (req, res) => {
-  const analysis = new analysisModel(req.body);
-
-  try {
-    const savedAnalysis = await meal.save();
-    return res.json(savedAnalysis);
-  } catch (error) {
-    return res.json({ Err: "Resturant Analysis DataBase ERRORR" });
-  }
+  return res.json(await createAnalysis(req.body));
 });
 
 router.put("/:id", async (req, res) => {
-  const id = req.params.id;
-  const body = req.body;
-  try {
-    const updatedAnalysis = await analysisModel.findByIdAndUpdate(id, body, {
-      new: true,
-    });
-    return res.json(updatedAnalysis);
-  } catch (error) {
-    return res.json({ Error: "Resturant Analysis DataBase ERRORR" });
-  }
+  return res.json(await updateAnalysis(req.params.id, req.body));
+});
+router.patch("/:id", async (req, res) => {
+  return res.json(await updateAnalysis(req.params.id, req.body));
 });
 
 router.delete("/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    const deletedAnalysis = await analysisModel.findByIdAndDelete(id);
-    return res.json(deletedAnalysis);
-  } catch (error) {
-    return res.json({ Error: "Resturant Analysis DataBase ERRORR" });
-  }
+  return res.json(await deleteAnalysisById(req.params.id));
 });
 
 module.exports = router;

@@ -1,65 +1,37 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const mealsModel = require("../models/meals");
 
+const {
+  getAllMeals,
+  getMealById,
+  updateMeal,
+  deleteMealById,
+  createMeals } = require("../controllers/meals.js")
 const router = express.Router();
 
 router.use(express.json());
 
 router.get("/", async (req, res) => {
-  try {
-    const mealsList = await mealsModel.find({}).populate("restaurant");
-
-    res.json(mealsList);
-  } catch (error) {
-    res.json({ Err: "DB_ERR" });
-  }
+  return res.json(await getAllMeals());
 });
 
 router.get("/:id", async (req, res) => {
-  try {
-    const meal = await mealsModel.findById(req.params.id);
-    res.json(meal);
-  } catch (error) {
-    res.json({ Err: "DB_ERR" });
-  }
+  return res.json(await getMealById(req.params.id));
 });
 
 router.post("/", async (req, res) => {
-  const meal = new mealsModel(req.body);
-
-  try {
-    const mealsave = await meal.save();
-    res.json(mealsave);
-  } catch (error) {
-    res.json({ Err: "DB_ERR" });
-  }
+  return res.json(await createMeals(req.body));
 });
 
 router.put("/:id", async (req, res) => {
-  try {
-    const meal = await mealsModel.updateOne({ _id: req.params.id }, req.body);
-    return res.send("update done");
-  } catch (error) {
-    res.json({ Err: "DB_ERR" });
-  }
+  return res.json(await updateMeal(req.params.id, req.body));
 });
 router.patch("/:id", async (req, res) => {
-  try {
-    const meal = await mealsModel.updateOne({ _id: req.params.id }, req.body);
-    return res.send("update done");
-  } catch (error) {
-    res.json({ Err: "DB_ERR" });
-  }
+  return res.json(await updateMeal(req.params.id, req.body));
 });
 
 router.delete("/:id", async (req, res) => {
-  try {
-    const meal = await mealsModel.deleteOne({ _id: req.params.id });
-    return res.send("delete done");
-  } catch (error) {
-    res.json({ Err: "DB_ERR" });
-  }
+  return res.json(await deleteMealById(req.params.id));
 });
 
 module.exports = router;
