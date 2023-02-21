@@ -1,5 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const Access = require("./Access");
+
 const {
   getAllRestaurantAdmin,
   getRestaurantAdminById,
@@ -11,25 +12,31 @@ router.use(express.json());
 
 
 router.get("/", async (req, res) => {
+  Access(res);
   return res.json(await getAllRestaurantAdmin());
 });
 
 router.get("/:id", async (req, res) => {
+  Access(res);
   return res.json(await getRestaurantAdminById(req.params.id));
 });
 
 router.post("/", async (req, res) => {
+  Access(res);
   return res.json(await createRestaurantAdmin(req.body));
 });
 
 router.put("/:id", async (req, res) => {
+  Access(res);
   return res.json(await updateRestaurantAdmin(req.params.id, req.body));
 });
 router.patch("/:id", async (req, res) => {
+  Access(res);
   return res.json(await updateRestaurantAdmin(req.params.id, req.body));
 });
 
 router.delete("/:id", async (req, res) => {
+  Access(res);
   return res.json(await deleteRestaurantAdminById(req.params.id));
 });
 
