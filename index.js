@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const MONGO_URL =
-  "mongodb+srv://eman:1234@cluster0.xtb3nbi.mongodb.net/talabat";
+const cors = require("cors");
+const DB = require("./config/db");
 
 const mealsRoute = require("./routes/meals");
 const customersRoute = require("./routes/customers");
@@ -9,32 +9,34 @@ const ordersRoute = require("./routes/orders");
 const restaurantsRoute = require("./routes/restaurants");
 const analysisRoute = require("./routes/restaurant_analysis");
 const restaurantAdminRoute = require("./routes/restaurant_admins");
+const imagesRoute = require("./routes/images");
 
 const PORT = 5100;
 const app = express();
 
-mongoose.connect(MONGO_URL, (err) => {
-  if (!err) return console.log(`connect done`);
-  console.log("error==========");
-});
 app.listen(PORT, (err) => {
-  if (!err) return console.log(`server start at port ${PORT}`);
-  console.log(err);
+  if (!err) return console.log(`Server Listening at Port Number ${PORT}`);
+  else return console.log(`"Server Connection Error" ${err}`);
 });
+
+mongoose.connect(DB.MONGO_URL, (err) => {
+  if (!err) {
+    return console.log("Database is Connected");
+  } else return console.log(`"Database Connection Error" ${err}`);
+});
+
+const corsOptions = {
+  origin: "*",
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/meals", mealsRoute);
 app.use("/customers", customersRoute);
 app.use("/orders", ordersRoute);
-app.use("/restaurants", restaurantsRoute);
 app.use("/analysis", analysisRoute);
+app.use("/restaurants", restaurantsRoute);
 app.use("/restaurant-admins", restaurantAdminRoute);
-
-
-const cors = require('cors');
-const corsOptions = {
-  origin: '*',
-  // credentials: true,            //access-control-allow-credentials:true
-  optionSuccessStatus: 200
-}
-app.use(cors(corsOptions));
+app.use("/files", imagesRoute);

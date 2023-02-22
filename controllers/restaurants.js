@@ -4,21 +4,21 @@ async function getAllRestaurants() {
   try {
     return await RestaurantsModel.find({});
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
 async function getRestaurantById(restaurantId) {
   try {
     return await RestaurantsModel.findById(restaurantId).populate("menu");
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
 async function createRestaurant(restaurantData) {
   try {
     return await RestaurantsModel.create(restaurantData);
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
 async function updateRestaurant(restaurantId, restaurantData) {
@@ -31,19 +31,16 @@ async function updateRestaurant(restaurantId, restaurantData) {
       }
     );
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
 async function deleteRestaurant(restaurantId) {
   try {
     return await RestaurantsModel.findByIdAndDelete(restaurantId);
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
-
-//get restaurant menu
-//get restaurant menu categories
 
 module.exports = {
   getAllRestaurants,
