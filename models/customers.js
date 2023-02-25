@@ -6,6 +6,7 @@ const customerShema = mongoose.Schema({
   address: { type: String },
   phone_number: { type: String },
   email: { type: String },
+  password: { type: String },
   favourite_orders: {
     type: [
       {
