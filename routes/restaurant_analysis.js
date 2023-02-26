@@ -1,4 +1,5 @@
 const express = require("express");
+const Access = require("./Access");
 const mongoose = require("mongoose");
 const {
   getAllAnalysis,
