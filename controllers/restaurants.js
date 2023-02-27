@@ -2,7 +2,7 @@ const RestaurantsModel = require("../models/restaurants");
 
 async function getAllRestaurants() {
   try {
-    return await RestaurantsModel.find({});
+    return await RestaurantsModel.find({}).populate("menu");
   } catch (error) {
     return error;
   }

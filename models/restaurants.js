@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const restaurantSchema = mongoose.Schema({
   restaurant_name: { type: String },
-  logo: { type: String }, ////////////////////!
-  meals: { type: [mongoose.Types.ObjectId] },
+  logo: { type: String },
+  meals: { type: [String] },
   branches: {
     type: [
       {

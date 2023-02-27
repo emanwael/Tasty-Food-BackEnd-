@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const DB = require("./config/db");
+const DB = require("./config/database");
+require("dotenv").config();
 
 const mealsRoute = require("./routes/meals");
 const customersRoute = require("./routes/customers");
@@ -31,6 +32,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(express.urlencoded());
 app.use(express.json());
 
 app.use("/meals", mealsRoute);
