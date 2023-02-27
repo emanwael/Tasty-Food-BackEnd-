@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
 const restaurantAdminSchema = mongoose.Schema({
-  email: { type: String, unique: true, match: /.+@.+\.+/ },
-  password: { type: Number, required: true, minLength: 8 },
+  email: { type: String, match: /.+@.+\.+/ },
+  password: { type: String, minLength: 8 },
   restaurant: { type: mongoose.Types.ObjectId, ref: "restaurants" },
+  token: { type: String },
 });
 
 const restaurantAdminModel = mongoose.model(

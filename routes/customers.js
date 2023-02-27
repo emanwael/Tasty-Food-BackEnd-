@@ -1,5 +1,5 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const authentication = require("../middlewares/authentcation");
 const Access = require("./Access");
 //
 const {
@@ -23,24 +23,26 @@ router.get("/:id", async (req, res) => {
   Access(res);
   return res.json(await getCustomerById(req.params.id));
 });
+//? login
 router.post("/signin", async (req, res) => {
   Access(res);
-  return res.json(await signCustomerIn(req.body.email, req.body.password));
+  return res.json(await signCustomerIn(req.body));
 });
+//? register
 router.post("/", async (req, res) => {
   Access(res);
   return res.json(await createCustomer(req.body));
 });
-router.put("/:id", async (req, res) => {
+router.put("/:id", authentication, async (req, res) => {
   Access(res);
   return res.json(await updateCustomer(req.params.id, req.body));
 });
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authentication, async (req, res) => {
   Access(res);
   return res.json(await updateCustomer(req.params.id, req.body));
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authentication, async (req, res) => {
   Access(res);
   return res.json(await deleteCustomerById(req.params.id));
 });

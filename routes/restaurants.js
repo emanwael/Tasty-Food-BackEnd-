@@ -1,6 +1,6 @@
 const express = require("express");
 const Access = require("./Access");
-
+const authentication = require("../middlewares/authentcation");
 const router = express.Router();
 const {
   getAllRestaurants,
@@ -22,11 +22,11 @@ router.post("/", async (req, res) => {
   Access(res);
   return res.json(await createRestaurant(req.body));
 });
-router.put("/:id", async (req, res) => {
+router.put("/:id", authentication, async (req, res) => {
   Access(res);
   return res.json(await updateRestaurant(req.params.id, req.body));
 });
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authentication, async (req, res) => {
   Access(res);
   return res.json(await deleteRestaurant(req.params.id));
 });
