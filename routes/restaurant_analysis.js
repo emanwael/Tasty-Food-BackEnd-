@@ -4,9 +4,11 @@ const mongoose = require("mongoose");
 const {
   getAllAnalysis,
   getAnalysisById,
+  getAnalysisByRestaurantId,
   updateAnalysis,
   deleteAnalysisById,
-  createAnalysis } = require("../controllers/restaurant_analysis")
+  createAnalysis,
+} = require("../controllers/restaurant_analysis");
 
 const router = express.Router();
 
@@ -21,7 +23,10 @@ router.get("/:id", async (req, res) => {
   Access(res);
   return res.json(await getAnalysisById(req.params.id));
 });
-
+router.get("/restaurant/:id", async (req, res) => {
+  Access(res);
+  return res.json(await getAnalysisByRestaurantId(req.params.id));
+});
 router.post("/", async (req, res) => {
   Access(res);
   return res.json(await createAnalysis(req.body));
