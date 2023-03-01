@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const customerShema = mongoose.Schema({
   customer_name: { type: String },
   customer_img: { type: String },
+  img_id: { type: String },
   address: { type: String },
   phone_number: { type: String },
   email: { type: String },

@@ -19,7 +19,7 @@ async function getAnalysisById(AnalysisId) {
 async function getAnalysisByRestaurantId(restaurant_id) {
   try {
     return await analysisModel
-      .find({ restaurant_id })
+      .findOne({ restaurant_id })
       .populate("meals_orders.meal_id");
   } catch (error) {
     console.log(error);

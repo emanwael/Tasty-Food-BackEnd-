@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const DB = require("./config/database");
@@ -10,7 +11,6 @@ const ordersRoute = require("./routes/orders");
 const restaurantsRoute = require("./routes/restaurants");
 const analysisRoute = require("./routes/restaurant_analysis");
 const restaurantAdminRoute = require("./routes/restaurant_admins");
-const imagesRoute = require("./routes/images");
 const paymentRoute = require("./routes/payments");
 
 const PORT = 5100;
@@ -33,8 +33,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(express.urlencoded());
-app.use(express.json());
+// app.use(express.json());
+// app.use(bodyParser.urlencoded({ limit: "50mb" }));
+app.use(bodyParser.json({ limit: "50mb" }));
 
 app.use("/meals", mealsRoute);
 app.use("/customers", customersRoute);
@@ -42,6 +43,4 @@ app.use("/orders", ordersRoute);
 app.use("/analysis", analysisRoute);
 app.use("/restaurants", restaurantsRoute);
 app.use("/restaurant-admins", restaurantAdminRoute);
-app.use("/files", imagesRoute);
 app.use("/payments", paymentRoute);
-
