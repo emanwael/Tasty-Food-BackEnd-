@@ -11,6 +11,7 @@ const restaurantsRoute = require("./routes/restaurants");
 const analysisRoute = require("./routes/restaurant_analysis");
 const restaurantAdminRoute = require("./routes/restaurant_admins");
 const imagesRoute = require("./routes/images");
+const paymentRoute = require("./routes/payments");
 
 const PORT = 5100;
 const app = express();
@@ -42,3 +43,5 @@ app.use("/analysis", analysisRoute);
 app.use("/restaurants", restaurantsRoute);
 app.use("/restaurant-admins", restaurantAdminRoute);
 app.use("/files", imagesRoute);
+app.use("/payments", paymentRoute);
+
