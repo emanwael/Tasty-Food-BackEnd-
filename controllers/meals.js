@@ -19,7 +19,16 @@ async function getMealById(mealId) {
 
 async function updateMeal(mealId, meal) {
   try {
-    return await mealsModel.findByIdAndUpdate(mealId, meal);
+    cloudinary.v2.uploader
+      .upload(meal.meal_img, {
+        folder: "itigp/meals/",
+      })
+      .then(async (result) => {
+        meal.meal_img = result.secure_url;
+        meal.img_id = result.public_id;
+        return await mealsModel.findByIdAndUpdate(mealId, meal);
+      })
+      .catch((err) => console.log(err));
   } catch (error) {
     console.log(error);
   }
