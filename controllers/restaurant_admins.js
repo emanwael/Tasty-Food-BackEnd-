@@ -45,9 +45,9 @@ async function createRestaurantAdmin({
   email,
   password,
   restaurantName,
+  category,
   branchName,
   branchAddress,
-  branchLocation,
   phone,
 }) {
   try {
@@ -62,10 +62,11 @@ async function createRestaurantAdmin({
           {
             branch_name: branchName,
             address: branchAddress,
-            location: branchLocation,
+            location: "",
           },
         ],
         phone_number: [phone],
+        category,
       });
       let encryptedPassword = await bcrypt.hash(password, 10);
       admin = await restaurantAdminModel.create({
