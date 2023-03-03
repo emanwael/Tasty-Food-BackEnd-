@@ -1,4 +1,5 @@
 const restaurantAdminModel = require("../models/restaurant_admins");
+const { createRestaurant, deleteRestaurant } = require("./restaurants");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -40,16 +41,37 @@ async function signRestaurantAdminIn({ email, password }) {
 }
 
 //? register function
-async function createRestaurantAdmin({ email, password }) {
+async function createRestaurantAdmin({
+  email,
+  password,
+  restaurantName,
+  branchName,
+  branchAddress,
+  branchLocation,
+  phone,
+}) {
   try {
     let admin = await restaurantAdminModel.find({ email });
     if (admin.length > 0) {
       return {};
     } else {
+      let restaurant = await createRestaurant({
+        restaurant_name: restaurantName,
+        logo: "https://blog.nscsports.org/wp-content/uploads/2014/10/default-img.gif",
+        branches: [
+          {
+            branch_name: branchName,
+            address: branchAddress,
+            location: branchLocation,
+          },
+        ],
+        phone_number: [phone],
+      });
       let encryptedPassword = await bcrypt.hash(password, 10);
       admin = await restaurantAdminModel.create({
         email,
         password: encryptedPassword,
+        restaurant: restaurant._id,
       });
       const token = jwt.sign(
         { user_id: admin._id, email },
@@ -57,6 +79,7 @@ async function createRestaurantAdmin({ email, password }) {
         { expiresIn: "4h" }
       );
       admin.token = token;
+
       return admin;
     }
   } catch (error) {

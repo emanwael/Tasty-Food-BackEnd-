@@ -1,6 +1,6 @@
 const mealsModel = require("../models/meals");
 const { cloudinary } = require("../config/cloudinary");
-
+const { addItemToMenu } = require("./restaurants");
 async function getAllMeals() {
   try {
     return await mealsModel.find({});
@@ -43,7 +43,12 @@ async function createMeals(meal) {
       .then(async (result) => {
         meal.meal_img = result.secure_url;
         meal.img_id = result.public_id;
-        return await mealsModel.create(meal);
+        let added_meal = await mealsModel.create(meal);
+        let addToMenu = await addItemToMenu(
+          added_meal.restaurant,
+          added_meal._id
+        );
+        return added_meal;
       })
       .catch((err) => console.log(err));
   } catch (error) {
