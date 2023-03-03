@@ -1,6 +1,6 @@
 const mealsModel = require("../models/meals");
 const { cloudinary } = require("../config/cloudinary");
-const { addItemToMenu } = require("./restaurants");
+const { addItemToMenu, deleteItemFromMenu } = require("./restaurants");
 async function getAllMeals() {
   try {
     return await mealsModel.find({});
@@ -46,8 +46,10 @@ async function createMeals(meal) {
         let added_meal = await mealsModel.create(meal);
         let addToMenu = await addItemToMenu(
           added_meal.restaurant,
-          added_meal._id
+          added_meal._id,
+          added_meal.food_group
         );
+
         return added_meal;
       })
       .catch((err) => console.log(err));
@@ -58,7 +60,13 @@ async function createMeals(meal) {
 
 async function deleteMealById(MealId) {
   try {
-    return await mealsModel.findByIdAndDelete(MealId);
+    let meal = await getMealById(MealId);
+    let meals = await deleteItemFromMenu(
+      meal.restaurant,
+      MealId,
+      meal.food_group
+    );
+    return { deletedMeal: await mealsModel.findByIdAndDelete(MealId), meals };
   } catch (error) {
     console.log(error);
   }

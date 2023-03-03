@@ -34,11 +34,36 @@ async function updateRestaurant(restaurantId, restaurantData) {
     console.log(error);
   }
 }
-async function addItemToMenu(restaurantId, itemId) {
+async function addItemToMenu(restaurantId, itemId, food_group) {
   try {
-    let restaurnt = await getRestaurantById(restaurantId);
-    restaurnt.menu.push(itemId);
-    restaurnt = await updateRestaurant(restaurantId, restaurnt);
+    let mealExist = false;
+    let restaurant = await getRestaurantById(restaurantId);
+    restaurant.menu.push(itemId);
+    restaurant.meals.forEach((meal) => {
+      if (meal == food_group) mealExist = true;
+    });
+    if (!mealExist) {
+      restaurant.meals.push(food_group);
+    }
+    restaurant = await updateRestaurant(restaurantId, restaurant);
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function deleteItemFromMenu(restaurantId, itemId, food_group) {
+  try {
+    let mealExist = false;
+    let restaurant = await getRestaurantById(restaurantId);
+    restaurant.menu.forEach((item) => {
+      if (item.food_group == food_group && item._id != itemId) mealExist = true;
+    });
+    if (!mealExist) {
+      restaurant.meals = restaurant.meals.filter((meal) => {
+        if (meal != food_group) return meal;
+      });
+    }
+    restaurant = await updateRestaurant(restaurantId, restaurant);
+    return restaurant.meals;
   } catch (error) {
     console.log(error);
   }
@@ -57,5 +82,6 @@ module.exports = {
   createRestaurant,
   updateRestaurant,
   addItemToMenu,
+  deleteItemFromMenu,
   deleteRestaurant,
 };
